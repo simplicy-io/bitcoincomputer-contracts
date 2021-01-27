@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "bitcoin-computer": "^0.4.7-beta",
+    "uint256": "^1.0.8",
+    "uint8": "^1.0.0"
+  }
+}
