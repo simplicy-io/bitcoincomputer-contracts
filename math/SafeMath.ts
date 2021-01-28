@@ -1,4 +1,3 @@
-import { UInt256 } from 'uint256';
 import assert = require('assert');
 
 export class SafeMath {
@@ -88,7 +87,7 @@ export class SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    div(a: number, b: number):  number {
+     div(a: number, b: number):  number {
         assert(b > 0);
         return a / b;
     }

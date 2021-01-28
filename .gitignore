@@ -1,6 +1,9 @@
 # dependencies
 node_modules/
 
+# distribution
+dist/
+
 # IDE
 /.idea
 /.awcache
@@ -33,3 +36,6 @@ yarn-error.log
 /packages/graphql
 /benchmarks/memory
 build/config\.gypi
+
+# secrets
+secrets.json

@@ -7,10 +7,11 @@
       "noUnusedLocals": false,
       "removeComments": true,
       "noLib": false,
+      "skipLibCheck": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
+      "moduleResolution": "node",
       "target": "es6",
-      "sourceMap": true,
       "allowJs": true,
       "outDir": "dist",
       "lib": ["es2015"]

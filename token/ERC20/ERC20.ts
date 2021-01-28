@@ -53,7 +53,7 @@ class ERC20 implements IERC20 {
         assert(this._isEmpty(!recipient), "ERC20: transfer to the zero address");
 
         this._balances[sender] =  this.safeMatch.sub(this._balances[sender], amount,);
-        this._balances[recipient] = this.safeMatch.add(this._balances[recipient],amount)ß;
+        this._balances[recipient] = this.safeMatch.add(this._balances[recipient],amount);
         //emit Transfer(sender, recipient, amount);
     }
 
