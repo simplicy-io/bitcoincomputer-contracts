@@ -1,7 +1,9 @@
 import { Computer } from 'bitcoin-computer'
 import ERC20 from './token/ERC20/ERC20';
 
-const computer = new Computer({ seed: 'replace this seed', network: 'testnet' })
+const { mnemonic } = require('./secrets.json');
+
+const computer = new Computer({ seed: mnemonic, network: 'testnet' })
 
 ;(async () => {
     const publicKey = computer.db.wallet.getPublicKey().toString()

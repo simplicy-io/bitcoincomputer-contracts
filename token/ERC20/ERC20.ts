@@ -11,6 +11,8 @@ class ERC20 implements IERC20 {
     
     private _totalSupply: number;
 
+    private _owner: string;
+
     private _name: string;
     private _symbol: string;
     private _decimals: number;
@@ -19,6 +21,7 @@ class ERC20 implements IERC20 {
         this._name = name_;
         this._symbol = symbol_;
         this._decimals = 6;
+        this._owner = initialAccount;
         this._mint(initialAccount, initialBalance);
     }
 
@@ -43,7 +46,7 @@ class ERC20 implements IERC20 {
     }
 
     public transfer(recipient: string, amount: number) : boolean {
-        this._transfer(this._owners, recipient, amount);
+        this._transfer(this._owner, recipient, amount);
         return true;
     }
 
