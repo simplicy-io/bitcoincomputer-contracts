@@ -1,7 +1,7 @@
 import { Computer } from 'bitcoin-computer'
 import ERC20 from './token/ERC20/ERC20';
 
-const { mnemonic } = require('./secrets.json');
+const { mnemonic } = require('../secrets.json');
 
 const computer = new Computer({ seed: mnemonic, network: 'testnet' })
 

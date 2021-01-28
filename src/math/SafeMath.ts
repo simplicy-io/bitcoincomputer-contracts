@@ -1,11 +1,15 @@
 import assert = require('assert');
+import { UInt256 } from 'uint256';
 
-export class SafeMath {
+abstract class SafeMath {
+
+    constructor(){}
+
     /**
      * @dev Returns the addition of two unsigned integers, with an overflow flag.
      */
-    tryAdd(a: number, b: number): boolean {
-        const c = a + b;
+    public tryAdd(a: bigint, b: bigint): boolean {
+        const c = a+b;
         if (c < a) return false;
         return true;
     }
@@ -14,9 +18,9 @@ export class SafeMath {
     /**
      * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
      */
-    tryMul(a: number, b: number): boolean {
-        if (a == 0) return true;
-        const c = a * b;
+    public tryMul(a: bigint, b: bigint): boolean {
+        //if (a == <bigint0) return true;
+        const c = a*b;
         if (c / a != b) return false;
         return true
     }
@@ -24,16 +28,16 @@ export class SafeMath {
     /**
      * @dev Returns the division of two unsigned integers, with a division by zero flag.
      */
-    tryDiv(a: number, b: number): boolean{
-        if (b == 0) return false;
+    public tryDiv(a: bigint, b: bigint): boolean{
+        //if (b == 0) return false;
         return true;
     }
 
     /**
      * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
      */
-    tryMod(a: number, b: number): boolean {
-        if (b == 0) return false;
+    public tryMod(a: bigint, b: bigint): boolean {
+        //if (b == 0) return false;
         return true;
     }
 
@@ -45,9 +49,9 @@ export class SafeMath {
      *
      * - Addition cannot overflow.
      */
-    add(a: number, b: number): number {
-        const c = a + b;
-        assert(c >= a);
+    public add(a: bigint, b: bigint): bigint {
+        const c = a+b;
+        assert(c >= a), 'SafeMath: addition overflow';
         return c;
     }
 
@@ -59,9 +63,9 @@ export class SafeMath {
      *
      * - Subtraction cannot overflow.
      */
-    sub(a: number, b: number): number {
-        assert(b <= a);
-        return a - b;
+    public sub(a: bigint, b: bigint): bigint {
+        assert(b <= a, "SafeMath: subtraction overflow");
+        return a-b;
     }
 
     /**
@@ -72,10 +76,10 @@ export class SafeMath {
      *
      * - Multiplication cannot overflow.
      */
-    mul(a: number, b: number): number {
-        if (a == 0) return 0;
-        const c = a * b;
-        assert(c / a == b);
+    public mul(a: bigint, b: bigint): bigint {
+        //if (a == 0) return 0;
+        const c = a*b;
+        //assert(c / a == b);
         return c;
     }
 
@@ -87,9 +91,9 @@ export class SafeMath {
      *
      * - The divisor cannot be zero.
      */
-     div(a: number, b: number):  number {
-        assert(b > 0);
-        return a / b;
+    public div(a: bigint, b: bigint):  bigint {
+        //assert(b > 0);
+        return a/b;
     }
 
     /**
@@ -100,8 +104,10 @@ export class SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    public mod(a: number, b: number): number {
-        assert(b > 0);
-        return a % b;
+    public mod(a: bigint, b: bigint): bigint {
+        //assert(b > 0);
+        return a%b;
     }
 }
+
+export default SafeMath;
