@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
       "module": "commonjs",
+      "esModuleInterop": true,
       "declaration": false,
       "noImplicitAny": false,
       "noUnusedLocals": false,
@@ -12,7 +13,7 @@
       "sourceMap": true,
       "allowJs": true,
       "outDir": "dist",
-      "lib": ["es7"]
+      "lib": ["es2015"]
     },
     "exclude": ["node_modules", "**/*.spec.ts"]
   }

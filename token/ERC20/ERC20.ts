@@ -5,8 +5,9 @@ import { SafeMath } from '../../math/SafeMath'
 
 class ERC20 implements IERC20 {
 
+    safeMatch = new SafeMath();
+
     private _balances: (string|number)[];
-    private _allowances: (string|number)[][];
     
     private _totalSupply: number;
 
@@ -14,10 +15,11 @@ class ERC20 implements IERC20 {
     private _symbol: string;
     private _decimals: number;
 
-    constructor(name_: string, symbol_: string) {
+    constructor(name_: string, symbol_: string, initialAccount: string, initialBalance: number) {
         this._name = name_;
         this._symbol = symbol_;
-        this._decimals = 18;
+        this._decimals = 6;
+        this._mint(initialAccount, initialBalance);
     }
 
     public name(): string  {
@@ -41,42 +43,30 @@ class ERC20 implements IERC20 {
     }
 
     public transfer(recipient: string, amount: number) : boolean {
-        this._transfer(recipient, amount);
+        this._transfer(this._owners, recipient, amount);
         return true;
     }
 
-    public allowance(owner: string, spender: string): number {
-        return this._allowances[owner][spender];
+
+    private _transfer(sender: string, recipient: string, amount: number): boolean|any {
+        assert(this._isEmpty(!sender), "ERC20: transfer from the zero address");
+        assert(this._isEmpty(!recipient), "ERC20: transfer to the zero address");
+
+        this._balances[sender] =  this.safeMatch.sub(this._balances[sender], amount,);
+        this._balances[recipient] = this.safeMatch.add(this._balances[recipient],amount)ß;
+        //emit Transfer(sender, recipient, amount);
     }
 
-    public approve(spender: string, amount: number): boolean {
-        //this._approve(_msgSender(), spender, amount);
-        return true;
+    private _mint(account: string, amount: number){
+        assert(this._isEmpty(!account), "ERC20: mint to the zero address");
+    
+        this._totalSupply = this.safeMatch.add(this._totalSupply, amount);
+        this._balances[account] = this._balances[account].add(amount);
+        //mit Transfer(address(0), account, amount);
     }
 
-    public transferFrom(sender: string, recipient: string, amount: number): boolean {
-        this._transfer(recipient, amount);
-        //this._approve(sender,  amount);
-        return true;
-    }
 
-    private _transfer(recipient: string, amount: number): boolean{
-        if(this._empty(recipient)) {
-            return false;
-        }
-        //this._balances[sender] = this._balances[sender].sub(amount, "ERC20: transfer amount exceeds balance");
-        this._balances[recipient] = this._balances[recipient].add(amount);
-    }
-
-    private _approve(owner: string, spender: string, amount: number) {
-        assert(this._empty(owner));
-        assert(this._empty(spender));
-
-        this._allowances[owner][spender] = amount;
-        //emit Approval(owner, spender, amount);
-    }
-
-    private _empty(e) {
+    private _isEmpty(e) {
         switch (e) {
           case "":
           case 0:
@@ -88,5 +78,7 @@ class ERC20 implements IERC20 {
           default:
             return false;
         }
-      }
+    }
 }
+
+export default ERC20;

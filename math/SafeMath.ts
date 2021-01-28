@@ -88,7 +88,7 @@ export class SafeMath {
      *
      * - The divisor cannot be zero.
      */
-     div(a: number, b: number):  number {
+    div(a: number, b: number):  number {
         assert(b > 0);
         return a / b;
     }
@@ -101,7 +101,7 @@ export class SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    mod(a: number, b: number): number {
+    public mod(a: number, b: number): number {
         assert(b > 0);
         return a % b;
     }
