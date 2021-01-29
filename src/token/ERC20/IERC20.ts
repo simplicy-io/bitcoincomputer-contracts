@@ -1,7 +1,5 @@
-import { UInt256 } from 'uint256';
 
-/**
- * @dev Interface of the ERC20 standard as defined in the EIP.
+/** * @dev Interface of the ERC20 standard as defined in the EIP.
  */
 export interface IERC20 {
     /**
@@ -65,11 +63,17 @@ export interface IERC20 {
      *
      * Note that `value` may be zero.
      */
-    //event Transfer(address indexed from, address indexed to, uint256 value);
+    Transfer(from: string, to: string, value: bigint);
 
     /**
      * @dev Emitted when the allowance of a `spender` for an `owner` is set by
      * a call to {approve}. `value` is the new allowance.
      */
-    //event Approval(address indexed owner, address indexed spender, uint256 value);
+    Approval(owner: string, spender: string, value: bigint);
 }
+
+export interface IBalances {
+    address: string;
+    value: number;
+  }
+  

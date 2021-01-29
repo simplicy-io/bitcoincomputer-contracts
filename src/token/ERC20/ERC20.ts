@@ -1,18 +1,12 @@
 const assert = require('assert');
-import { IERC20 } from './IERC20';
-//import Context from '../../utils/Context';
-//import { UInt256 } from 'uint256';
-//import SafeMath from '../../math/SafeMath';
+import { EventEmitter } from 'events';
+import { IERC20, IBalances } from './IERC20';
+import { BalancesProxy } from './BalancesProxy';
+import SafeMath from '../../math/SafeMath';
 
-interface IBalance {
-    [key: string]: bigint;
-}
-
-class ERC20 implements IERC20 {
-    private _balances: IBalance;
-    //private _balances[address: string]: bigint;
-    
-    //private _allowances: [][]
+export class ERC20 extends SafeMath implements IERC20 {   
+    private _balances: IBalances; 
+    //private _allowances: { address:string: [ {[key: string]: bigint}]}
     
     private _totalSupply: bigint;
 
@@ -33,7 +27,7 @@ class ERC20 implements IERC20 {
      * construction.
      */
     constructor(name_: string, symbol_: string, initialAccount: string, initialBalance: bigint) {
-        //super();
+        super();
         this._name = name_;
         this._symbol = symbol_;
         this._decimals = 18;
@@ -84,7 +78,7 @@ class ERC20 implements IERC20 {
      * @dev See {IERC20-balanceOf}.
      */
     public balanceOf(account: string): bigint {
-        return this._balances[account];
+        return //this._balances.account;
     }
 
     /**
@@ -175,6 +169,26 @@ class ERC20 implements IERC20 {
         return true;
     }
 
+    public Transfer(from: string, to: string, value: bigint) {
+        const output = {
+            'from': from,
+            'to': to,
+            'value': value,
+        }
+        console.log(output);
+        return new EventEmitter();
+    }
+
+    public Approval(owner: string, spender: string, value: bigint) {
+        const output = {
+            'owner': owner,
+            'spender': spender,
+            'value': value,
+        }
+        console.log(output);
+        return new EventEmitter();
+    }
+
     /**
      * @dev Moves tokens `amount` from `sender` to `recipient`.
      *
@@ -193,8 +207,8 @@ class ERC20 implements IERC20 {
         //assert(!this._isEmpty(sender), "ERC20: transfer from the zero address");
         //assert(!this._isEmpty(recipient), "ERC20: transfer to the zero address");
 
-        this._balances[sender] -= amount;
-        this._balances[recipient] += amount;
+        //this._balances.sender -= amount;
+        //this._balances.recipient += amount;
         //emit Transfer(sender, recipient, amount);
     }
 
@@ -209,8 +223,16 @@ class ERC20 implements IERC20 {
      */
     private _mint(account: string, amount: bigint){
         //assert(!this._isEmpty(account), "ERC20: mint to the zero address");
-        this._totalSupply = this._totalSupply + amount;
-        //this._balances[account] = this._balances[account] + amount;
+        
+        //Check balance?
+        if(this._balances.address === account) {
+            console.log(account)
+        } 
+        // Balance.Create will throw an exception if rawJson does not match the type of RootName.
+        const proxyObject = BalancesProxy.Parse(`{"${account}":${amount}}`);
+        // actually exist.
+
+    
         //mit Transfer(address(0), account, amount);
     }
 
@@ -244,20 +266,6 @@ class ERC20 implements IERC20 {
      */
     private _setupDecimals(decimals_: number) {
         this._decimals = decimals_;
-    }
-
-    private _isEmpty(e) {
-        switch (e) {
-          case "":
-          case 0:
-          case "0":
-          case null:
-          case false:
-          case typeof(e) == "undefined":
-            return true;
-          default:
-            return false;
-        }
     }
 }
 
